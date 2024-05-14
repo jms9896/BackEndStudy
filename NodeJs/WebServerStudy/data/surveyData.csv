@@ -1,4 +1,4 @@
-Timestamp,QuestionId,Answer
+Timestamp,QuestionId,Answer0,Answer1,Answer2,Answer3,Answer4
 2024-05-13 10:15:41,id0,True,False,False,False,False
 2024-05-13 10:15:41,id1,True,False,False,False,False
 2024-05-13 10:15:41,id2,False,True,False,False,False
