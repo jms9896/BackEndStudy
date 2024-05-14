@@ -12,6 +12,44 @@
     <div id="chartsContainer">
         <!-- 여러 개의 캔버스를 담을 컨테이너 -->
     </div>
+
+    <h2>Original Survey Data</h2>
+    <table id="surveyDataTable" border="1">
+        <thead>
+            <tr>
+                <th>Timestamp</th>
+                <th>QuestionId</th>
+                <th>Answer0</th>
+                <th>Answer1</th>
+                <th>Answer2</th>
+                <th>Answer3</th>
+                <th>Answer4</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- 데이터가 여기에 추가될 것입니다 -->
+        </tbody>
+    </table>
+
+    <h2>Add New Survey Data</h2>
+    <form id="addDataForm">
+        <label>Timestamp: <input type="text" id="timestamp" required></label><br>
+        <label>Question ID: <input type="text" id="questionId" required></label><br>
+        <label>Answer 0: <input type="text" id="answer0" required></label><br>
+        <label>Answer 1: <input type="text" id="answer1" required></label><br>
+        <label>Answer 2: <input type="text" id="answer2" required></label><br>
+        <label>Answer 3: <input type="text" id="answer3" required></label><br>
+        <label>Answer 4: <input type="text" id="answer4" required></label><br>
+        <button type="submit">Add Data</button>
+    </form>
+
+    <h2>Delete Survey Data</h2>
+    <form id="deleteDataForm">
+        <label>Timestamp: <input type="text" id="deleteTimestamp" required></label><br>
+        <label>Question ID: <input type="text" id="deleteQuestionId" required></label><br>
+        <button type="submit">Delete Data</button>
+    </form>
+
     <script src="script.js"></script>
 </body>
 </html>

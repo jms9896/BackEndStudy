@@ -5,3 +5,5 @@ Timestamp,QuestionId,Answer0,Answer1,Answer2,Answer3,Answer4
 2024-05-13 10:19:15,id0,True,False,False,False,False
 2024-05-13 10:19:15,id1,True,False,False,False,False
 2024-05-13 10:19:15,id2,True,False,False,False,False
+2024-05-13 10:19:16,id2,True,False,False,False,False
+2024-05-13 10:19:16,id1,False,False,True,False,False
