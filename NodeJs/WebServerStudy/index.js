@@ -15,6 +15,13 @@ app.get('/', (req, res) => {
 
 const filePath = path.join(__dirname, 'data', 'surveyData.csv');
 
+// 질문별 선택지 정보
+const options = {
+  id0: ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'],
+  id1: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
+  id2: ['15inch', '16inch', '17inch', '18inch', 'Larger']
+};
+
 app.get('/data', (req, res) => {
   const results = [];
   fs.createReadStream(filePath)
@@ -34,7 +41,7 @@ app.get('/data', (req, res) => {
         return acc;
       }, {});
 
-      res.json(voteCounts); // JSON 형태로 응답
+      res.json({voteCounts, options}); // JSON 형태로 응답
     });
 });
 

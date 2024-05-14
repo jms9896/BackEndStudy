@@ -4,10 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
         $.ajax({
             url: '/data',
             method: 'GET',
-            success: function(data) {
+            success: function(response) {
+                const { voteCounts, options } = response;
                 const chartsContainer = document.getElementById('chartsContainer');
-                Object.keys(data).forEach(questionId => {
-                    const counts = data[questionId];
+
+                Object.keys(voteCounts).forEach(questionId => {
+                    const counts = voteCounts[questionId];
+                    const labels = options[questionId];
                     const canvas = document.createElement('canvas');
                     chartsContainer.appendChild(canvas);
 
@@ -15,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
-                            labels: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
+                            labels: labels,
                             datasets: [{
                                 label: `Question ${questionId} Votes`,
                                 data: counts,
@@ -31,7 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     'rgba(54, 162, 235, 1)',
                                     'rgba(255, 206, 86, 1)',
                                     'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)'
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
                                 ],
                                 borderWidth: 1
                             }]
