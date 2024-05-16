@@ -1,4 +1,3 @@
-// index.js
 const express = require('express');
 const cors = require('cors');
 const pool = require('./db');
@@ -35,17 +34,19 @@ app.get('/data', async (req, res) => {
   }
 });
 
-
 app.post('/data', async (req, res) => {
-  const { timestamp, question_id, answer0, answer1, answer2, answer3, answer4 } = req.body;
+  const { timestamp, responses } = req.body;
 
   try {
-    const query = `
-      INSERT INTO survey (timestamp, question_id, answer0, answer1, answer2, answer3, answer4)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `;
-    const values = [timestamp, question_id, answer0, answer1, answer2, answer3, answer4];
-    await pool.query(query, values);
+    for (const response of responses) {
+      const { questionId, answers } = response;
+      const query = `
+        INSERT INTO survey (timestamp, question_id, answer0, answer1, answer2, answer3, answer4)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `;
+      const values = [timestamp, questionId, ...answers];
+      await pool.query(query, values);
+    }
     res.status(201).send('Data added successfully');
   } catch (err) {
     console.error('Error adding data:', err);
