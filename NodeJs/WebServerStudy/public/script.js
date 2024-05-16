@@ -1,14 +1,38 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 설문조사 결과 페이지에서 차트 그리기 및 데이터 로드
     if (window.location.pathname.includes('survey.html')) {
         $.ajax({
             url: '/data',
             method: 'GET',
             success: function(response) {
-                const { voteCounts, options, rawData } = response;
+                const rawData = response;
+
+                // 타임스탬프를 로컬 시간대로 변환하는 함수
+                const convertToLocalTime = (timestamp) => {
+                    const date = new Date(timestamp);
+                    return date.toLocaleString(); // 로컬 시간대로 변환하여 반환
+                };
 
                 // 차트 그리기
                 const chartsContainer = document.getElementById('chartsContainer');
+                const voteCounts = {};
+                const options = {
+                  id0: ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'],
+                  id1: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
+                  id2: ['15inch', '16inch', '17inch', '18inch', 'Larger']
+                };
+
+                rawData.forEach(row => {
+                    const questionId = row.question_id;
+                    if (!voteCounts[questionId]) {
+                        voteCounts[questionId] = [0, 0, 0, 0, 0];
+                    }
+                    voteCounts[questionId][0] += row.answer0;
+                    voteCounts[questionId][1] += row.answer1;
+                    voteCounts[questionId][2] += row.answer2;
+                    voteCounts[questionId][3] += row.answer3;
+                    voteCounts[questionId][4] += row.answer4;
+                });
+
                 Object.keys(voteCounts).forEach(questionId => {
                     const counts = voteCounts[questionId];
                     const labels = options[questionId];
@@ -56,13 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const tableBody = document.getElementById('surveyDataTable').getElementsByTagName('tbody')[0];
                 rawData.forEach(row => {
                     const newRow = tableBody.insertRow();
-                    newRow.insertCell().textContent = row.Timestamp;
-                    newRow.insertCell().textContent = row.QuestionId;
-                    newRow.insertCell().textContent = row.Answer0;
-                    newRow.insertCell().textContent = row.Answer1;
-                    newRow.insertCell().textContent = row.Answer2;
-                    newRow.insertCell().textContent = row.Answer3;
-                    newRow.insertCell().textContent = row.Answer4;
+                    newRow.insertCell().textContent = convertToLocalTime(row.timestamp);
+                    newRow.insertCell().textContent = row.question_id;
+                    newRow.insertCell().textContent = row.answer0;
+                    newRow.insertCell().textContent = row.answer1;
+                    newRow.insertCell().textContent = row.answer2;
+                    newRow.insertCell().textContent = row.answer3;
+                    newRow.insertCell().textContent = row.answer4;
                 });
             },
             error: function(error) {
@@ -85,13 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
 
         const newData = {
-            Timestamp: document.getElementById('timestamp').value,
-            QuestionId: document.getElementById('questionId').value,
-            Answer0: document.getElementById('answer0').value,
-            Answer1: document.getElementById('answer1').value,
-            Answer2: document.getElementById('answer2').value,
-            Answer3: document.getElementById('answer3').value,
-            Answer4: document.getElementById('answer4').value
+            timestamp: document.getElementById('timestamp').value,
+            question_id: document.getElementById('questionId').value,
+            answer0: document.getElementById('answer0').value,
+            answer1: document.getElementById('answer1').value,
+            answer2: document.getElementById('answer2').value,
+            answer3: document.getElementById('answer3').value,
+            answer4: document.getElementById('answer4').value
         };
 
         $.ajax({
@@ -115,8 +139,8 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
 
         const deleteData = {
-            Timestamp: document.getElementById('deleteTimestamp').value,
-            QuestionId: document.getElementById('deleteQuestionId').value
+            timestamp: document.getElementById('deleteTimestamp').value,
+            question_id: document.getElementById('deleteQuestionId').value
         };
 
         $.ajax({
