@@ -33,13 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     voteCounts[questionId][4] += row.answer4;
                 });
 
-                Object.keys(voteCounts).forEach(questionId => {
+                // 차트 생성
+                const createChart = (canvasId, questionId) => {
                     const counts = voteCounts[questionId];
                     const labels = options[questionId];
                     const canvas = document.createElement('canvas');
+                    canvas.id = canvasId;
                     chartsContainer.appendChild(canvas);
 
                     var ctx = canvas.getContext('2d');
+
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
@@ -67,6 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             }]
                         },
                         options: {
+                            responsive: true, // 반응형 설정
+                            maintainAspectRatio: true, // 비율 유지
+                            aspectRatio: 2, // 그래프의 가로 세로 비율 설정 (필요에 따라 조정 가능)
                             scales: {
                                 y: {
                                     beginAtZero: true
@@ -74,7 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             }
                         }
                     });
-                });
+                };
+
+                createChart('chart1', 'id0');
+                createChart('chart2', 'id1');
+                createChart('chart3', 'id2');
 
                 // 원본 데이터 테이블에 추가
                 const tableBody = document.getElementById('surveyDataTable').getElementsByTagName('tbody')[0];
@@ -111,11 +121,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const newData = {
             timestamp: document.getElementById('timestamp').value,
             question_id: document.getElementById('questionId').value,
-            answer0: document.getElementById('answer0').value,
-            answer1: document.getElementById('answer1').value,
-            answer2: document.getElementById('answer2').value,
-            answer3: document.getElementById('answer3').value,
-            answer4: document.getElementById('answer4').value
+            answer0: parseInt(document.getElementById('answer0').value),
+            answer1: parseInt(document.getElementById('answer1').value),
+            answer2: parseInt(document.getElementById('answer2').value),
+            answer3: parseInt(document.getElementById('answer3').value),
+            answer4: parseInt(document.getElementById('answer4').value)
         };
 
         $.ajax({

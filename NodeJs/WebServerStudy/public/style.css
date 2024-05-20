@@ -28,3 +28,15 @@ footer {
     margin-top: 20px;
     color: #777;
 }
+
+.charts-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+canvas {
+    margin: 10px;
+    width: 500px !important; /* 너비 조정 */
+    height: 300px !important; /* 높이 조정 */
+}
