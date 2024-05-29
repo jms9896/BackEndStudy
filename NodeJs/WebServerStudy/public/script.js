@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const chartsContainer = document.getElementById('chartsContainer');
                 const voteCounts = {};
                 const options = {
-                  id0: ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'],
-                  id1: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
-                  id2: ['15inch', '16inch', '17inch', '18inch', 'Larger']
+                    id0: ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'],
+                    id1: ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5'],
+                    id2: ['15inch', '16inch', '17inch', '18inch', 'Larger']
                 };
 
                 rawData.forEach(row => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const canvas = document.createElement('canvas');
                     chartsContainer.appendChild(canvas);
 
-                    var ctx = canvas.getContext('2d');
+                    const ctx = canvas.getContext('2d');
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
@@ -103,58 +103,70 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // CSV 다운로드
+    const downloadCsvButton = document.getElementById('downloadCsvButton');
+    if (downloadCsvButton) {
+        downloadCsvButton.addEventListener('click', function() {
+            window.location.href = '/export-csv';
+        });
+    }
+
     // 데이터 추가
     const addDataForm = document.getElementById('addDataForm');
-    addDataForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    if (addDataForm) {
+        addDataForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        const newData = {
-            timestamp: document.getElementById('timestamp').value,
-            question_id: document.getElementById('questionId').value,
-            answer0: document.getElementById('answer0').value,
-            answer1: document.getElementById('answer1').value,
-            answer2: document.getElementById('answer2').value,
-            answer3: document.getElementById('answer3').value,
-            answer4: document.getElementById('answer4').value
-        };
+            const newData = {
+                timestamp: document.getElementById('timestamp').value,
+                question_id: document.getElementById('questionId').value,
+                answer0: document.getElementById('answer0').value,
+                answer1: document.getElementById('answer1').value,
+                answer2: document.getElementById('answer2').value,
+                answer3: document.getElementById('answer3').value,
+                answer4: document.getElementById('answer4').value
+            };
 
-        $.ajax({
-            url: '/data',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(newData),
-            success: function(response) {
-                alert('Data added successfully');
-                location.reload();
-            },
-            error: function(error) {
-                console.error('Error adding data:', error);
-            }
+            $.ajax({
+                url: '/data',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(newData),
+                success: function(response) {
+                    alert('Data added successfully');
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error('Error adding data:', error);
+                }
+            });
         });
-    });
+    }
 
     // 데이터 삭제
     const deleteDataForm = document.getElementById('deleteDataForm');
-    deleteDataForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    if (deleteDataForm) {
+        deleteDataForm.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        const deleteData = {
-            timestamp: document.getElementById('deleteTimestamp').value,
-            question_id: document.getElementById('deleteQuestionId').value
-        };
+            const deleteData = {
+                timestamp: document.getElementById('deleteTimestamp').value,
+                question_id: document.getElementById('deleteQuestionId').value
+            };
 
-        $.ajax({
-            url: '/data',
-            method: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(deleteData),
-            success: function(response) {
-                alert('Data deleted successfully');
-                location.reload();
-            },
-            error: function(error) {
-                console.error('Error deleting data:', error);
-            }
+            $.ajax({
+                url: '/data',
+                method: 'DELETE',
+                contentType: 'application/json',
+                data: JSON.stringify(deleteData),
+                success: function(response) {
+                    alert('Data deleted successfully');
+                    location.reload();
+                },
+                error: function(error) {
+                    console.error('Error deleting data:', error);
+                }
+            });
         });
-    });
+    }
 });
