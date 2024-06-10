@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 타임스탬프를 로컬 시간대로 변환하는 함수
                 const convertToLocalTime = (timestamp) => {
                     const date = new Date(timestamp);
-                    return date.toLocaleString(); // 로컬 시간대로 변환하여 반환
+                    return date.toISOString().slice(0, 19).replace('T', ' '); // UTC 시간 그대로 반환
                 };
 
                 // 차트 그리기

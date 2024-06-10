@@ -76,7 +76,7 @@ app.get('/export-csv', async (req, res) => {
   try {
     const query = `
       SELECT id, 
-             CONVERT_TZ(timestamp, '+00:00', @@session.time_zone) AS timestamp, 
+             timestamp AS timestamp, 
              question_id, 
              answer0, 
              answer1, 
