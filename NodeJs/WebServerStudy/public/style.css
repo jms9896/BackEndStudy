@@ -28,3 +28,12 @@ footer {
     margin-top: 20px;
     color: #777;
 }
+
+/* Canvas 크기를 조절하는 CSS */
+canvas {
+    max-width: 600px;
+    max-height: 400px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}

@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
             success: function(response) {
                 const rawData = response;
 
+                // 데이터 로드 확인
+                console.log("Loaded Data:", rawData);
+
                 // 타임스탬프를 로컬 시간대로 변환하는 함수
                 const convertToLocalTime = (timestamp) => {
                     const date = new Date(timestamp);
@@ -37,6 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     const counts = voteCounts[questionId];
                     const labels = options[questionId];
                     const canvas = document.createElement('canvas');
+                    canvas.style.maxWidth = '600px'; // Canvas 크기 조절
+                    canvas.style.maxHeight = '400px'; // Canvas 크기 조절
                     chartsContainer.appendChild(canvas);
 
                     const ctx = canvas.getContext('2d');
